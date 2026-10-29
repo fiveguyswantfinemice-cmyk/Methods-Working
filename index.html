@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RETRO MAINFRAME ARCHIVE</title>
+  <style>
+    :root {
+      --bg-color: #0d0d0d;
+      --term-green: #00ff66;
+      --term-dim: #008833;
+      --alert-red: #ff3355;
+      --border-color: #004411;
+      --font-stack: 'Courier New', Courier, monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--term-green);
+      font-family: var(--font-stack);
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* CRT Overlay Effects */
+    .crt-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: linear-gradient(
+        rgba(18, 16, 16, 0) 50%, 
+        rgba(0, 0, 0, 0.25) 50%
+      );
+      background-size: 100% 4px;
+      z-index: 100;
+      pointer-events: none;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      border: 4px solid var(--term-dim);
+      margin: 10px;
+      padding: 10px;
+      box-shadow: inset 0 0 15px rgba(0, 255, 102, 0.15);
+    }
+
+    /* Top Navigation Frame */
+    .header-frame {
+      border-bottom: 2px solid var(--term-dim);
+      padding-bottom: 10px;
+      margin-bottom: 10px;
+    }
+
+    .title-bar {
+      font-weight: bold;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: 1px solid var(--term-dim);
+      color: var(--term-dim);
+      padding: 5px 15px;
+      font-family: var(--font-stack);
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .tab-btn.active, .tab-btn:hover {
+      background: var(--term-dim);
+      color: #000;
+      border-color: var(--term-green);
+    }
+
+    /* Content Display Frames */
+    .viewport {
+      flex: 1;
+      overflow-y: auto;
+      padding-right: 5px;
+    }
+
+    .frame-page {
+      display: none;
+    }
+
+    .frame-page.active {
+      display: block;
+    }
+
+    /* Methods Grid Layout */
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 15px;
+      margin-top: 10px;
+    }
+
+    .method-card {
+      border: 1px dashed var(--term-dim);
+      padding: 12px;
+      background: rgba(0, 20, 0, 0.4);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .method-card:hover {
+      border-color: var(--term-green);
+      background: rgba(0, 40, 0, 0.6);
+    }
+
+    .card-title {
+      font-weight: bold;
+      font-size: 1rem;
+      margin-bottom: 8px;
+    }
+
+    .status-badge {
+      display: inline-block;
+      align-self: flex-start;
+      background-color: var(--alert-red);
+      color: #ffffff;
+      padding: 2px 8px;
+      font-size: 0.8rem;
+      font-weight: bold;
+      letter-spacing: 1px;
+      border: 1px solid var(--alert-red);
+      box-shadow: 0 0 6px rgba(255, 51, 85, 0.4);
+    }
+
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--term-dim);
+      margin: 10px 0;
+    }
+
+    /* Status Log Styling */
+    .log-line {
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: var(--term-dim);
+    }
+
+    .log-line.active {
+      color: var(--term-green);
+    }
+
+    .system-status-box {
+      border: 1px solid var(--term-dim);
+      padding: 15px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="crt-overlay"></div>
+
+  <div class="container">
+    <!-- Header / Frame Switcher -->
+    <div class="header-frame">
+      <div class="title-bar">> SYSTEM ARCHIVE // CLASSIFIED DIRECTORY</div>
+      <div class="nav-tabs">
+        <button class="tab-btn active" onclick="switchFrame('frame-methods')">[1] PAID METHODS</button>
+        <button class="tab-btn" onclick="switchFrame('frame-phishing')">[2] CREDENTIAL INTERCEPTION</button>
+        <button class="tab-btn" onclick="switchFrame('frame-tools')">[3] SOFTWARE ARCHIVE</button>
+        <button class="tab-btn" onclick="switchFrame('frame-status')">[4] SYSTEM STATUS</button>
+      </div>
+    </div>
+
+    <!-- Main Viewport -->
+    <div class="viewport">
+      
+      <!-- PAGE 1: PAID METHODS (16 Methods) -->
+      <div id="frame-methods" class="frame-page active">
+        <p style="color: var(--term-dim);">SELECT AN ENTRY TO VIEW RESTRICTIONS (16 MODULES REGISTERED):</p>
+        
+        <div class="grid-container">
+          
+          <div class="method-card">
+            <div>
+              <div class="card-title">Auto Change Email Method</div>
+              <div class="card-desc">Automated system update flow interface.</div>
+            </div>
+            <span class="status-badge">PAID</span>
+          </div>
+
+          <div class="method-card">
+            <div>
+              <div class="card-title">Buying Method</div>
+              <div class="card-desc">Transaction validation procedure archive.</div>
+            </div>
+            <span class="status-badge">PAID</span>
+          </div>
+
+          <div class="method-card">
+            <div>
+              <div class="card-title">Github Method</div>
+              <div class="card-desc">Repository key rotation deployment protocol.</div>
+            </div>
+            <span class="status-badge">PAID</span>
+          </div>
+
+          <div class="method-card">
+            <div>
+              <div class="card-title">expected manipulate (op)</div>
+              <div class="card-desc">Low-level register override operational matrix.</div>
+            </div>
+            <span class="status-badge">PAID</span>
+          </div>
+
+          <div class="method-card">
+            <div>
+              <div class="card-title">RoVer Method</div>
+              <div class="card-desc">Verification handshake validation sequence.</div>
+            </div>
+            <span class="status-badge">PAID</span>
+          </div>
+
+          <div class="method-card">
+            <div>
+              <div class="card-title">1 Click Method</div>
+              <div class="card-desc">Single-execution macro automated pipeline.</div>
+            </div>
+            <span class="status-badge">PAID</span>
+          </div>
+
+          <div class="method-card">
+            <div>
+              <div class="card-title">Session Hijack Swap Method</div>
+              <div class="card-desc">Cross-session token rotation and exchange.</div>
+            </div>
+            <span class="status-badge">PAID</span>
+          </div>
+
+          <div class="method-card">
+            <div>
+              <div class="card-title">2FA Bypass Emulation Method</div>
+              <div class="card-desc">Secondary verification relay bypass simulation.</div>
+            </div>
+            <span class="status-badge">PAID</span>
+          </div>
+
+          <div class="method-card">
+            <div>
+              <div class="card-title">API Key Extraction Method</div>
+              <div class="card-desc">Client-side runtime credential memory dump.</div>
+            </div>
+            <span class="status-badge">PAID</span>
+          </div>
+
+          <div class="method-card">
+            <div>
+              <div class="card-title">Password Reset Override Method</div>
+              <div class="card-desc">Automated recovery token interception sequence.</div>
+            </div>
+            <span class="status-badge">PAID</span>
+          </div>
+
+          <div class="method-card">
+            <div>
+              <div class="card-title">Webhook Escalation Method</div>
+              <div class="card-desc">Asynchronous event payload elevated delivery.</div>
+            </div>
+            <span class="status-badge">PAID</span>
+          </div>
+
+          <div class="method-card">
+            <div>
+              <div class="card-title">OAuth Refresh Hijack Method</div>
+              <div class="card-desc">Authorization grant token renewal interception.</div>
+            </div>
+            <span class="status-badge">PAID</span>
+          </div>
+
+          <div class="method-card">
+            <div>
+              <div class="card-title">Cookie Persistence Injector</div>
+              <div class="card-desc">Browser storage session lock & renewal protocol.</div>
+            </div>
+            <span class="status-badge">PAID</span>
+          </div>
+
+          <div class="method-card">
+            <div>
+              <div class="card-title">Device Fingerprint Spoof Method</div>
+              <div class="card-desc">Hardware identifier header modification vector.</div>
+            </div>
+            <span class="status-badge">PAID</span>
+          </div>
+
+          <div class="method-card">
+            <div>
+              <div class="card-title">Account Recovery Bypass Method</div>
+              <div class="card-desc">Automated security challenge bypass sequence.</div>
+            </div>
+            <span class="status-badge">PAID</span>
+          </div>
+
+          <div class="method-card">
+            <div>
+              <div class="card-title">IP Rate-Limit Evasion Method</div>
+              <div class="card-desc">Dynamic proxy cluster network rotation setup.</div>
+            </div>
+            <span class="status-badge">PAID</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- PAGE 2: CREDENTIAL INTERCEPTION -->
+      <div id="frame-phishing" class="frame-page">
+        <p style="color: var(--term-dim);">SIMULATED INTERCEPTION & CAPTURE ARCHIVES:</p>
+        
+        <div class="grid-container">
+
+          <div class="method-card">
+            <div>
+              <div class="card-title">Fake Login Clone Method</div>
+              <div class="card-desc">Mirror interface template deployment design.</div>
+            </div>
+            <span class="status-badge">PAID</span>
+          </div>
+
+          <div class="method-card">
+            <div>
+              <div class="card-title">OAuth Token Harvester Method</div>
+              <div class="card-desc">Session credential redirection protocol.</div>
+            </div>
+            <span class="status-badge">PAID</span>
+          </div>
+
+          <div class="method-card">
+            <div>
+              <div class="card-title">Webhook Relay Hook Method</div>
+              <div class="card-desc">Real-time data exfiltration forwarder pipeline.</div>
+            </div>
+            <span class="status-badge">PAID</span>
+          </div>
+
+          <div class="method-card">
+            <div>
+              <div class="card-title">Fake Cookie Logger Method</div>
+              <div class="card-desc">Session storage extraction & sniffing interface.</div>
+            </div>
+            <span class="status-badge">PAID</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- PAGE 3: SOFTWARE ARCHIVE -->
+      <div id="frame-tools" class="frame-page">
+        <p style="color: var(--term-dim);">RESTRICTED SOFTWARE PACKAGES:</p>
+        
+        <div class="grid-container">
+
+          <div class="method-card">
+            <div>
+              <div class="card-title">Roblox Tools Package</div>
+              <div class="card-desc">Platform utility and analysis module archive.</div>
+            </div>
+            <span class="status-badge">PAID</span>
+          </div>
+
+          <div class="method-card">
+            <div>
+              <div class="card-title">Discord Integration Suite</div>
+              <div class="card-desc">Bot API testing and webhook execution framework.</div>
+            </div>
+            <span class="status-badge">PAID</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- PAGE 4: SYSTEM STATUS -->
+      <div id="frame-status" class="frame-page">
+        <div class="system-status-box">
+          <div class="log-line active">[+] TERMINAL SESSION ATTACHED</div>
+          <div class="log-line">[+] ACCESS LEVEL: READ-ONLY (GUEST)</div>
+          <div class="log-line">[+] ENCRYPTION: 256-BIT ROT-X</div>
+          <div class="log-line">[!] NOTICE: ACCESS TO ARCHIVED METHODS REQUIRES ELEVATED PRIVILEGES</div>
+          <div class="log-line active">[+] ALL REGISTERED MODULES MARKED AS RESTRICTED (PAID)</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    function switchFrame(frameId) {
+      // Hide all frames
+      const frames = document.querySelectorAll('.frame-page');
+      frames.forEach(frame => frame.classList.remove('active'));
+
+      // Deactivate all tab buttons
+      const buttons = document.querySelectorAll('.tab-btn');
+      buttons.forEach(btn => btn.classList.remove('active'));
+
+      // Activate selected frame
+      document.getElementById(frameId).classList.add('active');
+
+      // Set active button style
+      event.target.classList.add('active');
+    }
+  </script>
+
+</body>
+</html>
